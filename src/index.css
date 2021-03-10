@@ -12,6 +12,13 @@ code {
     monospace;
 }
 
+.contact-management__header {
+  justify-content: space-between;
+  display: flex;
+  background-color: #e62c1f;
+  padding: 0 16px;
+}
+
 .list-items {
   display: grid;
   grid-template-columns: repeat(3, 1fr);

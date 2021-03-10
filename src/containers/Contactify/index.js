@@ -2,7 +2,9 @@ import { useState, useEffect, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Modal from "react-modal";
 import { getListContact } from "../../store/actions";
+import { contactApi } from "../../services/contactApi";
 import Card from "../../components/Card";
+import UserForm from "../../components/Form";
 
 import { customStyles } from "./properties";
 
@@ -19,6 +21,20 @@ const Contactify = () => {
     }
   }, [dispatch]);
 
+  const createUser = () => {
+    setShowModal(true);
+  };
+
+  const handleNewUser = (fields) => {
+    contactApi
+      .create(fields)
+      .then(() => {
+        fetchApi();
+        setShowModal(false);
+      })
+      .catch((err) => console.error(err));
+  };
+
   const handleEdit = (contact) => () => {
     setShowModal(true);
   };
@@ -32,7 +48,12 @@ const Contactify = () => {
   return (
     <>
       <div>
-        <h1>Contact Management</h1>
+        <div className="contact-management__header mt-4">
+          <h1 className="text-white">Contact Management</h1>
+          <div className="my-auto card btn btn-add" onClick={createUser}>
+            Add new user
+          </div>
+        </div>
         <div className="list-items p-4">
           {contactList?.map((contact, key) => (
             <Card
@@ -49,7 +70,7 @@ const Contactify = () => {
         onRequestClose={closeModal}
         style={customStyles}
       >
-        <div>Henlo</div>
+        <UserForm handleNewUser={handleNewUser} userData={contactList} />
       </Modal>
     </>
   );
