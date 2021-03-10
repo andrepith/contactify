@@ -16,7 +16,7 @@ code {
   justify-content: space-between;
   display: flex;
   background-color: #e62c1f;
-  padding: 0 16px;
+  padding: 8px 16px;
 }
 
 .list-items {
@@ -28,4 +28,20 @@ code {
 
 .btn {
   cursor: pointer;
+}
+
+@media only screen and (max-width: 768px) {
+  .list-items {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+  }
+
+  .contact-management__header {
+    display: block;
+    padding: 8px;
+  }
+
+  .btn-add {
+    display: inline-block;
+  }
 }
