@@ -10,6 +10,7 @@ import { customStyles } from "./properties";
 
 const Contactify = () => {
   const [showModal, setShowModal] = useState(false);
+  const [editData, setEditData] = useState({});
   const dispatch = useDispatch();
   const { contactList } = useSelector((state) => state);
   const closeModal = () => setShowModal(false);
@@ -22,6 +23,7 @@ const Contactify = () => {
   }, [dispatch]);
 
   const createUser = () => {
+    setEditData({});
     setShowModal(true);
   };
 
@@ -35,8 +37,19 @@ const Contactify = () => {
       .catch((err) => console.error(err));
   };
 
+  const handleEditUser = (fields) => {
+    contactApi
+      .update(fields, editData?.id)
+      .then(() => {
+        fetchApi();
+        setShowModal(false);
+      })
+      .catch((err) => console.error(err));
+  };
+
   const handleEdit = (contact) => () => {
     setShowModal(true);
+    setEditData(contact);
   };
 
   const handleRemove = (contact) => () => {};
@@ -51,7 +64,7 @@ const Contactify = () => {
         <div className="contact-management__header mt-4">
           <h1 className="text-white">Contact Management</h1>
           <div className="my-auto card btn btn-add" onClick={createUser}>
-            Add new user
+            Add new contact
           </div>
         </div>
         <div className="list-items p-4">
@@ -70,7 +83,11 @@ const Contactify = () => {
         onRequestClose={closeModal}
         style={customStyles}
       >
-        <UserForm handleNewUser={handleNewUser} userData={contactList} />
+        <UserForm
+          handleNewUser={handleNewUser}
+          handleEditUser={handleEditUser}
+          editData={editData}
+        />
       </Modal>
     </>
   );

@@ -1,13 +1,14 @@
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
 
-const UserForm = ({ handleNewUser, userData }) => {
+const UserForm = ({ handleNewUser, handleEditUser, editData }) => {
+  const isEdit = !!Object.keys(editData).length;
   return (
     <Formik
       initialValues={{
-        firstName: "",
-        lastName: "",
-        age: "",
+        firstName: isEdit ? editData?.firstName : "",
+        lastName: isEdit ? editData?.lastName : "",
+        age: isEdit ? editData?.age : "",
       }}
       validationSchema={Yup.object().shape({
         firstName: Yup.string().required("First Name is required"),
@@ -24,7 +25,11 @@ const UserForm = ({ handleNewUser, userData }) => {
           ...fields,
           age: Number(fields.age),
         };
-        return handleNewUser(data);
+        if (isEdit) {
+          return handleEditUser(data);
+        } else {
+          return handleNewUser(data);
+        }
       }}
     >
       {({ errors, touched }) => (
@@ -79,7 +84,7 @@ const UserForm = ({ handleNewUser, userData }) => {
           </div>
           <div className="form-group justify-content-end d-flex">
             <button type="submit" className="btn btn-primary mr-2">
-              Add New User
+              {isEdit ? "Update Data Contact" : "Add New Contact"}
             </button>
           </div>
         </Form>
