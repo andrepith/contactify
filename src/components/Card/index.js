@@ -1,3 +1,5 @@
+import PropTypes from "prop-types";
+
 const Card = ({ contact, handleEdit, handleRemove }) => {
   return (
     <div className="card p-2">
@@ -15,6 +17,17 @@ const Card = ({ contact, handleEdit, handleRemove }) => {
       </div>
     </div>
   );
+};
+
+Card.propTypes = {
+  contact: PropTypes.object.isRequired,
+  handleEdit: PropTypes.func,
+  handleRemove: PropTypes.func,
+};
+
+Card.defaultProps = {
+  handleEdit: () => {},
+  handleRemove: () => {},
 };
 
 export default Card;

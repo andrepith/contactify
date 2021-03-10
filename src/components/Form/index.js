@@ -1,3 +1,4 @@
+import PropTypes from "prop-types";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
 
@@ -91,6 +92,17 @@ const UserForm = ({ handleNewUser, handleEditUser, editData }) => {
       )}
     </Formik>
   );
+};
+
+UserForm.propTypes = {
+  editData: PropTypes.object,
+  handleEditUser: PropTypes.func,
+  handleNewUser: PropTypes.func,
+};
+
+UserForm.defaultProps = {
+  handleEditUser: () => {},
+  handleNewUser: () => {},
 };
 
 export default UserForm;
