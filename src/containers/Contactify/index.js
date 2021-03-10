@@ -52,7 +52,12 @@ const Contactify = () => {
     setEditData(contact);
   };
 
-  const handleRemove = (contact) => () => {};
+  const handleRemove = (contact) => () => {
+    contactApi
+      .delete(contact?.id)
+      .then(() => fetchApi())
+      .catch((err) => console.error(err));
+  };
 
   useEffect(() => {
     fetchApi();
